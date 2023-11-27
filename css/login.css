@@ -219,6 +219,7 @@ label {
   transition: 0.5s ease-in-out;
 }
 input {
+text-transform: none !important;
   width: 70%;
   height: 20px;
   background: #e0dede;
