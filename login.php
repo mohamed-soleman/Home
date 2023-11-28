@@ -1,29 +1,35 @@
 <?php
   include("include/connect.php");
   function is_strong($password){
+    //اختبار اذا كان كلمه السر تحتوي علي حروف كبيره وصفيره وخاليه من اي رموز
         $Cap    = false;
         $small  = false;
         $nums   = false;
+        $count  = 0;
         $num_pass = strlen($password);
         for($i = 0;$i < $num_pass;$i++){
           if((int)($password[$i]) != 0){
+            $count+=1;
             $nums = true;
         }else{
             if($password[$i]){
                 if(ord($password[$i]) >= 97 && ord($password) <= 122){
+                  $count+=1;
                     $small = true;
                 }else if(ord($password[$i]) >= 65 && ord($password[$i]) <= 90){
                     $Cap = true;
+                    $count+=1;
                 }
             }else{
                 $nums = true;
+                $count+=1;
             }
         }
-      }
-      
-      return($Cap && $small && $nums);
+      }//اختبار اذا كان كلمه السر تحتوي علي حروف كبيره وصفيره وخاليه من اي رموز
+      return($Cap && $small && $nums && $count === $num_pass);
   }
   function get_str_pass(){
+    //لارجاع رقم سري قوي
       $num_rand = rand(3 , 5);
       $pass = "";
       for($i =1;$i <= $num_rand;$i++):
@@ -46,6 +52,7 @@
       endfor;
       return $pass;
   }
+
   if($_SERVER['REQUEST_METHOD'] === "POST"){
     // sign in
     if(isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["pass"])){
