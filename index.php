@@ -148,7 +148,7 @@
               <button> <a  href="#" alt="#" class="box"> show all </a></button>
              </div>
              <div class="cover">
-                <img src="images/s1.jpg" alt="">
+                <img src="images/g6.jpg" alt="">
            </div>
          </div>
         </div>
@@ -160,7 +160,7 @@
               <button> <a  href="#" alt="#" class="box"> show all </a></button>
              </div>
              <div class="cover">
-                <img src="images/s2.jpg" alt="">
+                <img src="images/g5.jpg" alt="">
            </div>
          </div>
         </div>
@@ -172,7 +172,7 @@
               <button> <a  href="#" alt="#" class="box"> show all </a></button>
              </div>
              <div class="cover">
-                <img src="images/s3.jpg" alt="">
+                <img src="images/g3.jpg" alt="">
            </div>
          </div>
         </div>

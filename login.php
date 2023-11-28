@@ -123,7 +123,7 @@
         if($user_Name_good && $user_password){
           $db->exec("INSERT INTO users (User_name , password ,Email) values ('$name','$pass','$email')");
           setcookie("user_name" , $name , time() + 60*60*24*365);
-          header("location:user/services.php");
+          header("location:services.php");
         }
       }
       
@@ -132,15 +132,15 @@
     if(isset($_POST["old_name"])&& isset($_POST["old_pass"])){
       $old_name = $_POST["old_name"];
       $old_pass = $_POST["old_pass"];
-      $sel  = $db->query("SELECT User_name from users where User_name = '$old_name' 
-      && password = '$old_pass'");
+      $sel  = $db->query("SELECT User_name from users where 
+      User_name = '$old_name' || Email = '$old_name' && password = '$old_pass'");
       $sel  = $sel->fetch(pdo::FETCH_ASSOC);
       if($sel){
           setcookie("user_name" , $old_name , strtotime("+1 year"));
         header("location:services.php");
       }else{
   ?>
-  <!-- هنا رساله الخطا اذا اتخل قيم  خطا في  login-->
+  <!-- هنا رساله الخطا اذا ادخل قيم  خطا في  login-->
   <p>error data</p>
   <?php        
       }
@@ -152,7 +152,7 @@
   foreach($error as $value){
     echo $value . "<BR>";
   }
-}?></p>
+  }?></p>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -264,21 +264,21 @@
                 name="name"
                 placeholder="User name"
                 required=""
-                value = <?php if(isset($name)){echo $name;} ?>
+                value = "<?php if(isset($name)){echo $name;}?>"
               />
               <input
                 type="email"
                 name="email"
                 placeholder="Email"
                 required=""
-                value = <?php if(isset($email)){echo $email;} ?>
+                value = "<?php if(isset($email)){echo $email;}?>"
               />
               <input
                 type="password"
                 name="pass"
                 placeholder="Password"
                 required=""
-                value = <?php if(isset($pass)){echo $pass;} ?>
+                value = "<?php if(isset($pass)){echo $pass;}?>"
               />
               <button>Sign up</button>
             </form>
@@ -294,14 +294,14 @@
                 name="old_name"
                 placeholder="User name"
                 required=""
-                value = <?php if(isset($old_name)){echo $old_name;} ?>
+                value = "<?php if(isset($old_name)){echo $old_name;}?>"
               />
               <input
                 type="password"
                 name="old_pass"
                 placeholder="Password"
                 required=""
-                value = <?php if(isset($old_pass)){echo $old_pass;} ?>
+                value ="<?php if(isset($old_pass)){echo $old_pass;}?>"
               />
               <button>Login</button>
             </form>
