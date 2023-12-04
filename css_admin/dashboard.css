@@ -50,19 +50,17 @@ nav:hover {
   margin: 10px 0 0 10px;
   padding-bottom: 3rem;
 }
-
-.logo img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+.logo .fas{
+  font-size: 1.5rem;
+  margin-left: -5px;
 }
 .logo span {
   font-weight: bold;
-  padding-left: 15px;
   font-size: 18px;
   text-transform: uppercase;
+  margin-top: 3px;
 }
-a {
+nav a {
   position: relative;
   width: 280px;
   font-size: 14px;
@@ -81,12 +79,12 @@ nav .fas {
 .nav-item {
   position: relative;
   top: 12px;
-  margin-left: 10px;
+  margin-left: 15px;
 }
-a:hover {
+nav a:hover {
   background: #eee;
 }
-a:hover i {
+nav a:hover i {
   color: #34af6d;
   transition: 0.5s;
 }
@@ -174,7 +172,7 @@ table thead tr {
 }
 .table th,
 .table td {
-  padding: 12px 15px;
+  padding: 20px 15px;
 }
 .table tbody tr {
   border-bottom: 1px solid #ddd;
@@ -189,19 +187,25 @@ table thead tr {
 .table tbody tr:last-of-type {
   border-bottom: 2px solid #4ad489;
 }
-.btn_action button {
+.btn_action a {
   margin-right: 10px;
 }
-.table button {
-  padding: 6px 20px;
+
+.table a{
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--dark);
+  width: 100%;
+  padding: 7px 20px;
   border-radius: 10px;
   cursor: pointer;
   background: transparent;
   border: 1px solid #4ad489;
+  margin: auto;
 }
-.table button:hover {
+.table a:hover {
   background: #4ad489;
-  color: #fff;
+  color: #fff !important;
   transition: 0.5rem;
 }
 .table .second_btn {
@@ -220,6 +224,7 @@ table thead tr {
   text-align: center !;
   margin: auto;
   width: 100%;
+  padding: 10px 0;
   background-color: #34af6d;
 }
 .Mobility .number{
@@ -371,7 +376,10 @@ form input:focus {
 .container .button:hover{
   background-color: var(--secondary);
 }
-
+table .fas{
+  font-size: 1.2rem;
+  color: var(--secondary);
+}
 
 
 /*___________form _login_____________*/

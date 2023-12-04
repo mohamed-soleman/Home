@@ -3,7 +3,7 @@
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
-      <link rel="stylesheet" href="css_admin/dashboard.css" />
+      <link rel="stylesheet" href="css/dashboard.css" />
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -16,7 +16,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
       />
-      <link rel="stylesheet" href="css_admin/bootstrap.min.css" />
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
@@ -37,7 +37,7 @@
           <ul>
             <li>
               <a href="#" class="logo">
-                <img src="images_admin/admin.jpeg" />
+                <i class="fas fa-solid fa-user-shield"></i>
                 <span class="nav-item">Admin</span>
               </a>
             </li>
@@ -56,13 +56,19 @@
             <li>
               <a href="profile.php">
                 <i class="fas fa-solid fa-user"></i>
-                <span class="nav-item">profile</span>
+                <span class="nav-item">Profile</span>
               </a>
             </li>
             <li>
               <a href="All-admins.php">
                 <i class="fas fa-solid fa-users"></i>
                 <span class="nav-item">All admins</span>
+              </a>
+            </li>
+            <li>
+              <a href="../index.php">
+                <i class="fas fa-solid fa-house"></i>
+                <span class="nav-item">Home</span>
               </a>
             </li>
 
@@ -132,8 +138,13 @@
                     <td>Ismailia</td>
                     <td>8:00AM</td>
                     <td>130$</td>
-                    <td><button>add</button></td>
-                    <td><button class="second_btn">delete</button></td>
+                    <!--_____________add-product___________-->
+                    <td><a href="#">add</a></td>
+                    <!--_____________add-product___________-->
+  
+                    <!--_____________delete-product________-->
+                    <td><a href="#" class="second_btn">delete</a></td>
+                    <!--_____________delete-product________-->
                   </tr>
                   <tr>
                     <td>02</td>
@@ -142,11 +153,11 @@
                     <td>9:00AM</td>
                     <td>40$</td>
                     <!--_____________add-product___________-->
-                    <td><button>add</button></td>
+                    <td><a href="#">add</a></td>
                     <!--_____________add-product___________-->
-
+  
                     <!--_____________delete-product________-->
-                    <td><button class="second_btn">delete</button></td>
+                    <td><a href="#" class="second_btn">delete</a></td>
                     <!--_____________delete-product________-->
                   </tr>
                   <tr>
@@ -155,8 +166,13 @@
                     <td>asyut</td>
                     <td>8:00AM</td>
                     <td>230$</td>
-                    <td><button>add</button></td>
-                    <td><button class="second_btn">delete</button></td>
+                    <!--_____________add-product___________-->
+                    <td><a href="#">add</a></td>
+                    <!--_____________add-product___________-->
+  
+                    <!--_____________delete-product________-->
+                    <td><a href="#" class="second_btn">delete</a></td>
+                    <!--_____________delete-product________-->
                   </tr>
                   <tr>
                     <td>04</td>
@@ -164,8 +180,13 @@
                     <td>Ismailia</td>
                     <td>8:00AM</td>
                     <td>110$</td>
-                    <td><button>add</button></td>
-                    <td><button class="second_btn">delete</button></td>
+                    <!--_____________add-product___________-->
+                    <td><a href="#">add</a></td>
+                    <!--_____________add-product___________-->
+  
+                    <!--_____________delete-product________-->
+                    <td><a href="#" class="second_btn">delete</a></td>
+                    <!--_____________delete-product________-->
                   </tr>
                 </tbody>
               </table>
@@ -221,9 +242,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
       ></script>
-      <script src="java_script/main.js"></script>
-      <script src="java_script/jquery.counterup.min.js"></script>
-      <script src="java_script/swiper-bundle.min.js"></script>
+      <script src="js/main.js"></script>
+      <script src="js/jquery-1.12.4.min.js"></script>
+      <script src="js/jquery.counterup.min.js"></script>
+      <script src="js/swiper-bundle.min.js"></script>
       <script>
         jQuery(document).ready(function ($) {
           $(".counter").counterUp({

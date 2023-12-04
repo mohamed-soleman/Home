@@ -32,7 +32,7 @@ nav {
   top: 0;
   bottom: 0;
   height: 100vh;
-  left: 0;
+  left: 0 t;
   width: 90px;
   /* width: 280px; */
   background: #fff;
@@ -49,19 +49,17 @@ nav:hover {
   margin: 10px 0 0 10px;
   padding-bottom: 3rem;
 }
-
-.logo img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+.logo .fas{
+  font-size: 1.5rem;
+  margin-left: -5px;
 }
 .logo span {
   font-weight: bold;
-  padding-left: 15px;
   font-size: 18px;
   text-transform: uppercase;
+  margin-top: 3px;
 }
-a {
+nav a {
   position: relative;
   width: 280px;
   font-size: 14px;
@@ -80,12 +78,12 @@ nav .fas {
 .nav-item {
   position: relative;
   top: 12px;
-  margin-left: 10px;
+  margin-left: 15px;
 }
-a:hover {
+nav a:hover {
   background: #eee;
 }
-a:hover i {
+nav a:hover i {
   color: #34af6d;
   transition: 0.5s;
 }
@@ -126,7 +124,6 @@ a:hover i {
   background: linear-gradient(126deg, #ffffff, #e3e3e3, #ffffff);
   width: 25%;
   margin: 10px;
-
   text-align: center;
   border-radius: 10px;
   padding: 10px;
@@ -189,9 +186,11 @@ a:hover i {
   margin-top: -30px;
   margin-bottom: 30px;
 }
-.con img {
+.con .fas {
+  font-size: 4rem;
   width: 150px;
-  border-radius: 50%;
+  margin: 30px;
+  padding: 10px;
 }
 
 .form-group {
@@ -224,5 +223,9 @@ a:hover i {
   margin-top: -30px;
 }
 .show:hover {
+  color: var(--secondary);
+}
+table .fas{
+  font-size: 1.2rem;
   color: var(--secondary);
 }
