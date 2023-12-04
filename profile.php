@@ -3,7 +3,7 @@
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
-      <link rel="stylesheet" href="css/profile.css" />
+      <link rel="stylesheet" href="css_admin/profile.css" />
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -16,7 +16,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
       />
-      <link rel="stylesheet" href="css/bootstrap.min.css" />
+      <link rel="stylesheet" href="css_admin/bootstrap.min.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
@@ -37,7 +37,7 @@
           <ul>
             <li>
               <a href="#" class="logo">
-                <img src="images/admin.jpeg" />
+                <img src="images_admin/admin.jpeg" />
                 <span class="nav-item">Admin</span>
               </a>
             </li>
@@ -95,22 +95,22 @@
               <div class="container_profile">
                 <div class="con">
                   <h2>personal information</h2>
-                  <img src="images/admin.jpeg" alt="" />
+                  <img src="images_admin/admin.jpeg" alt="" />
                 </div>
-                  <!--_________هناا معلومات الملف الشخصي للادمن_______-->
-                  <div class="form-group">
-                      <div class="in_group">
-                          <label for="#">name</label>
+
+                <div class="form-group">
+                  <div class="in_group">
+                    <label for="#">name</label>
                     <input
-                    class="form-control"
-                    placeholder="pleade type your name"
-                    type="text"
-                    name="first_name"
+                      class="form-control"
+                      placeholder="pleade type your name"
+                      type="text"
+                      name="first_name"
                       value="abdallah"
                     />
-                </div>
-                
-                <div class="in_group">
+                  </div>
+
+                  <div class="in_group">
                     <label for="#">gmail</label>
                     <input
                       class="form-control"
@@ -118,7 +118,7 @@
                       type="email"
                       name="first_name"
                       value="abdallah@gmail"
-                      />
+                    />
                   </div>
 
                   <div class="in_group">
@@ -129,12 +129,12 @@
                       type="text"
                       name="mobile"
                       value="+201211345657"
-                      />
+                    />
                   </div>
 
                   <div class="in_group">
-                      <label for="#">password</label>
-                      <input
+                    <label for="#">password</label>
+                    <input
                       class="form-control"
                       placeholder="pleade type your name"
                       type="password"
@@ -143,17 +143,16 @@
                       id="myInput"
                     />
                     <i
-                    class="show fa-regular fa-eye"
-                    onclick="myFunction()"
+                      class="show fa-regular fa-eye"
+                      onclick="myFunction()"
                     ></i>
-                </div>
-                <!--_________هناا معلومات الملف الشخصي للادمن_______-->
+                  </div>
                 </div>
               </div>
             </section>
           </div>
         </section>
-    </div>
+      </div>
 
       <!--*___________________right-section____________-->
 
@@ -163,10 +162,9 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
       ></script>
-      <script src="js/main.js"></script>
-      <script src="js/jquery-1.12.4.min.js"></script>
-      <script src="js/jquery.counterup.min.js"></script>
-      <script src="js/swiper-bundle.min.js"></script>
+      <script src="java_script/main.js"></script>
+      <script src="java_script/jquery.counterup.min.js"></script>
+      <script src="java_script/swiper-bundle.min.js"></script>
       <script>
         jQuery(document).ready(function ($) {
           $(".counter").counterUp({

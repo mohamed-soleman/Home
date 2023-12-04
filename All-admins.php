@@ -3,7 +3,7 @@
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
-      <link rel="stylesheet" href="css/All-admins.css" />
+      <link rel="stylesheet" href="css_admin/All-admins.css" />
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -16,7 +16,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
       />
-      <link rel="stylesheet" href="css/bootstrap.min.css" />
+      <link rel="stylesheet" href="css_admin/bootstrap.min.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
@@ -37,7 +37,7 @@
           <ul>
             <li>
               <a href="#" class="logo">
-                <img src="images/admin.jpeg" />
+                <img src="images_admin/admin.jpeg" />
                 <span class="nav-item">Admin</span>
               </a>
             </li>
@@ -65,10 +65,7 @@
 
             <li>
               <a href="#">
-                <i
-                  class="fas fa-solid fa-users"
-                  style="color: #34af6d !important"
-                ></i>
+                <i class="fas fa-solid fa-users" style="color: #34af6d !important"></i>
                 <span class="nav-item">All admins</span>
               </a>
             </li>
@@ -138,10 +135,9 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
       ></script>
-      <script src="js/main.js"></script>
-      <script src="js/jquery-1.12.4.min.js"></script>
-      <script src="js/jquery.counterup.min.js"></script>
-      <script src="js/swiper-bundle.min.js"></script>
+      <script src="java_script/main.js"></script>
+      <script src="java_script/jquery.counterup.min.js"></script>
+      <script src="java_script/swiper-bundle.min.js"></script>
       <script>
         jQuery(document).ready(function ($) {
           $(".counter").counterUp({
