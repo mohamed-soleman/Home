@@ -29,17 +29,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <!--__________dropdown____________-->
+        <?php if(isset($_COOKIE["user_name"]) || isset($_COOKIE["admin_name"])){ ?>
         <div class="dropdown">
           <li class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             services
           </li>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Apartments</a></li>
-            <li><a class="dropdown-item" href="#">Rooms</a></li>
-            <li><a class="dropdown-item" href="#">Beds</a></li>
-            <li><a class="dropdown-item" href="services.html">All</a></li>
+            <li><a class="dropdown-item" href="user/services.php?type=apartment">Apartments</a></li>
+            <li><a class="dropdown-item" href="user/services.php?type=rooms">Rooms</a></li>
+            <li><a class="dropdown-item" href="user/services.php?type=beds">Beds</a></li>
+            <li><a class="dropdown-item" href="user/services.php?type=all">All</a></li>
           </ul>
         </div>
+
          <!--__________dropdown____________-->
         <li class="nav-item">
           <a class="nav-link" href="#">about us</a>
@@ -48,11 +50,12 @@
           <a class="nav-link" href="#contact">contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">login</a>
+        <a class="nav-link " href="user/services.php">login</a><?php }else{?>
         </li>
       </ul>
   </div>
-  <a href="login.php" class="c-button c-button--gooey"> sign in <i class="fa-solid fa-right-to-bracket fa-fade"></i><div class="c-button__blobs"><div></div><div></div><div></div></div></a>
+        
+        <a href="user/login.php" class="c-button c-button--gooey"> sign in <i class="fa-solid fa-right-to-bracket fa-fade"></i><div class="c-button__blobs"><div></div><div></div><div></div></div></a><?php }?>
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
     <defs>
       <filter id="goo">
