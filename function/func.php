@@ -77,4 +77,17 @@
 
 	}
 
+	function is_string_true(string $string){
+		$number = strlen($string);
+		$new = "";
+		for ($i = 0;$i<$number;$i++){
+				if($string[$i] == "'"){
+						$new .= "\\".$string[$i];
+				}else{
+						$new .= $string[$i];
+				}
+		}
+		return $new;
+}
+	
 ?>

@@ -1,6 +1,28 @@
 <?php
     if(isset($_COOKIE["user_name"]) || isset($_COOKIE["admin_name"])){
-
+      include("include/connect.php");
+      
+      //في حاله اذاكان اختار شئ محدد
+      if(isset($_COOKIE["cities"]) && isset($_COOKIE["type"])){
+        $type = $_COOKIE["type"];
+        $city = $_COOKIE["cities"];
+        $cat = $db->query("SELECT users.User_name , products.id , price , img_name, category ,citys from products INNER JOIN users on products.id_user = users.id
+        where category = '$type' and citys= '$city'");
+        $cat = $cat->fetchAll(pdo::FETCH_ASSOC);
+      }else if(isset($_COOKIE["cities"])){
+        $city = $_COOKIE["cities"];
+        $cat = $db->query("SELECT users.User_name , products.id , price , img_name, category ,citys from products INNER JOIN users on products.id_user = users.id
+        where citys= '$city'");
+        $cat = $cat->fetchAll(pdo::FETCH_ASSOC);
+      }else if(isset($_COOKIE["type"])){
+        $type = $_COOKIE["type"];
+        $cat = $db->query("SELECT users.User_name , products.id , price , img_name, category ,citys from products INNER JOIN users on products.id_user = users.id
+        where category = '$type'");
+        $cat = $cat->fetchAll(pdo::FETCH_ASSOC);
+      }else{
+        $cat = $db->query("SELECT users.User_name , products.id , price , img_name, category ,citys from products INNER JOIN users on products.id_user = users.id");
+        $cat = $cat->fetchAll(pdo::FETCH_ASSOC);
+      }
 ?>
 
 <!DOCTYPE html>
@@ -37,12 +59,17 @@
       cities
     </li>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="services.php?cities=Cairo">Cairo</a></li>
-      <li><a class="dropdown-item" href="services.php?cities=Ismailia">Ismailia </a></li>
-      <li><a class="dropdown-item" href="services.php?cities=Asyut">Asyut</a></li>
+      <?php //اخراج اسامي المدن الموجوده
+        $cities = $db->query('SELECT citys from products group by citys');
+        $cities = $cities->fetchAll(pdo::FETCH_ASSOC);
+        foreach($cities as $c){
+      ?>
+      <li><a class="dropdown-item" href="change.php?cities=<?php echo $c["citys"]?>"><?php echo $c["citys"]?></a></li>
+        <?Php }?>
+      <li><a class="dropdown-item" href="change.php?cities=All">all</a></li>
     </ul>
   </div>
-   <!--__________dropdown____________-->
+  <!--__________dropdown____________-->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
           <?php if(isset($_COOKIE["admin_name"])){?>
@@ -85,196 +112,48 @@
           <div class = "title">
               <h1>Advertisement display page</h1>
           </div>
-           <!--_________________________________btn-filter_____________________-->
-           <div class = "filter-btns">
-               <button type = "button" class = "filter-btn"><a href="services.php?type=all" class="link">all</a></button>
-               <button type = "button" class = "filter-btn"><a href="services.php?type=apartment" class="link">apartment</a></button>
-               <button type = "button" class = "filter-btn"><a href="services.php?type=rooms" class="link">rooms</a></button>
-               <button type = "button" class = "filter-btn"><a href="services.php?type=beds" class="link">beds</a></button>
+            <!--_________________________________btn-filter_____________________-->
+            <div class = "filter-btns">
+                <button type = "button" class = "filter-btn"><a href="change.php?type=All" class="link">all</a></button>
+                <button type = "button" class = "filter-btn"><a href="change.php?type=Apartment" class="link">apartment</a></button>
+                <button type = "button" class = "filter-btn"><a href="change.php?type=Room" class="link">rooms</a></button>
+                <button type = "button" class = "filter-btn"><a href="change.php?type=Bed" class="link">beds</a></button>
             </div>
             <!--_________________________________btn-filter_____________________-->
 
           <div class = "filter-items">
             <!--________________product-card__________________-->
-            <div class = "filter-item">
-                <div class = "item-img" id="item-img">
-                    <img src = "img/s1.jpg" alt = "Item image">
-                    <span class = "discount">Ismailia</span>
-                </div>
-                <div class = "item-info">
-                    <p>Apartment  </p>
-                    <div>
-                        <span class = "old-price">$20.50</span>
-                        <span class = "apartment-price">$16.70</span>
-                    </div>
-                    <a href = "#" class ="add-btn">more details</a>
-                </div>
-            </div>
+            
             <!--________________product-card__________________-->
+            <?php
+              if(isset($_COOKIE["user_name"])){
+                $owner_name = $_COOKIE["user_name"];
+              }else{
+                $owner_name = "not";
+              }
+              foreach($cat as $caty){
+                $img = explode("?", $caty['img_name']);
 
+            ?>
               <div class = "filter-item all rooms">
                   <div class = "item-img">
-                      <img src = "img/s2.jpg" alt = "Item image">
-                      <span class = "discount">Ismailia</span>
+                      <img src = "img/<?php echo $img[0] ?>" alt = "Item image">
+                      <span class = "discount"><?php echo $caty['citys']?></span>
                   </div>
                   <div class = "item-info">
-                      <p> room </p>
+                      <p><?php echo $caty['category']?></p>
                       <div>
-                          <span class = "old-price">$40.50</span>
-                          <span class = "apartment-price">$31.70</span>
+                          <span class = "apartment-price"><?php echo $caty['price']?></span>
                       </div>
-                      <a href = "#" class ="add-btn">more details</a>
+                      <a href = "More_details.php?id=<?php echo $caty['id']?>" class ="add-btn">more details</a>
+                      <?php if($owner_name == $caty["User_name"] || isset($_COOKIE["admin_name"])){?>  
+                      <a href = "update.php?update_id=<?php echo $caty['id']?>" class ="add-btn">update</a>
+                      <a href = "delete.php?id=<?php echo $caty['id']?>" class ="add-btn">delete</a>
+                <?php }?>
                   </div>
               </div>
-
-              <div class = "filter-item all beds">
-                  <div class = "item-img">
-                      <img src = "img/s3.jpg" alt = "Item image">
-                      <span class = "discount">Cairo</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>bed</p>
-                      <div>
-                          <span class = "old-price">$100.50</span>
-                          <span class = "apartment-price">$67.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all apartment">
-                  <div class = "item-img">
-                      <img src = "img/s4.jpg" alt = "Item image">
-                      <span class = "discount">Asyut</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Room</p>
-                      <div>
-                          <span class = "old-price">$30.50</span>
-                          <span class = "apartment-price">$20.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all rooms">
-                  <div class = "item-img">
-                      <img src = "img/s5.jpg" alt = "Item image">
-                      <span class = "discount">ismailia</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Beds</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all beds">
-                  <div class = "item-img">
-                      <img src = "img/s4.jpg" alt = "Item image">
-                      <span class = "discount">ismailia</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all apartment">
-                  <div class = "item-img">
-                      <img src = "img/s3.jpg" alt = "Item image">
-                      <span class = "discount">ismailia</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all rooms">
-                  <div class = "item-img">
-                      <img src = "img/s2.jpg" alt = "Item image">
-                      <span class = "discount">Cairo</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all beds">
-                  <div class = "item-img">
-                      <img src = "img/s1.jpg" alt = "Item image">
-                      <span class = "discount">Cairo</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all apartment">
-                  <div class = "item-img">
-                      <img src = "img/s5.jpg" alt = "Item image">
-                      <span class = "discount">Cairo</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all rooms">
-                  <div class = "item-img">
-                      <img src = "img/s3.jpg" alt = "Item image">
-                      <span class = "discount">Asyut</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
-              </div>
-
-              <div class = "filter-item all beds">
-                  <div class = "item-img">
-                      <img src = "img/s2.jpg" alt = "Item image">
-                      <span class = "discount">Asyut</span>
-                  </div>
-                  <div class = "item-info">
-                      <p>Cool Item Name</p>
-                      <div>
-                          <span class = "old-price">$20.50</span>
-                          <span class = "apartment-price">$16.70</span>
-                      </div>
-                      <a href = "#" class ="add-btn">more details</a>
-                  </div>
+              <?php }?>
+              
               </div>
           </div>
       </div>

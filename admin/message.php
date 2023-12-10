@@ -99,10 +99,19 @@
             <h1>Messages</h1>
             <i class="fas fa-user-cog" style="font-size: 1.5rem"></i>
           </div>
+          <?php
+                include("../user/include/connect.php");
+                $select = $db->query('SELECT messege.id,text ,User_name,Mdate as date,Email
+                from messege inner join users on messege.id_user = users.id order by date desc');
+                $select = $select->fetchAll(pdo::FETCH_ASSOC);
+                $n = 0;
+                if($select){
+                ?>
           <div class="users">
             <section class="attendance">
               <div class="attendance-list">
                 <h1>Message management</h1>
+                
                 <table class="table">
                   <thead>
                     <tr>
@@ -110,64 +119,43 @@
                       <th>Name</th>
                       <th>Gmail</th>
                       <th>message</th>
+                      <th>date</th>
                       <th class="basket_">delete</th>
                     </tr>
                   </thead>
+                  <?Php
+                  include("../user/include/connect.php");
+                  $select = $db->query('SELECT messege.id,text ,User_name,Mdate as date,Email
+                  from messege inner join users on messege.id_user = users.id order by date desc');
+                  $select = $select->fetchAll(pdo::FETCH_ASSOC);
+                  $n = 0;
+                  foreach($select as $s){
+                    $date = date_create($s["date"]);
+                    $date = date_format($date , "Y-m-j g:i:s a"); // التنسيق الخاص بالتاريخ
+                    $n++;
+                  ?>
                   <tbody>
                     <tr>
-                      <td>01</td>
-                      <td>ahmed</td>
-                      <td>ahmed@gmail.com</td>
+                      <td><?php echo $n?></td>
+                      <td><?php echo $s["User_name"]?></td>
+                      <td><?php echo $s["Email"]?></td>
                       <td class="message">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nemo ducimus doloribus sint quod nam illo atque debitis
-                        voluptate asperiores aperiam dolor nesciunt earum
-                        dolores, temporibus vitae! Perspiciatis pariatur maxime
-                        ullam.
+                        <?php echo $s["text"]?>
                       </td>
-                      <td class="basket"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                    </tr>
-                    <tr>
-                      <td>02</td>
-                      <td>samy</td>
-                      <td>samy@gmail.com</td>
-                      <td class="message">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nemo ducimus doloribus sint quod nam illo atque debitis
-                        voluptate asperiores aperiam dolor nesciunt earum
-                        dolores, temporibus vitae! Perspiciatis pariatur maxime
-                        ullam.
+                      <td><?php echo $date?></td>
                       </td>
-                      <td class="basket"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+                      <td class="basket"><a href="delete.php?id_message=<?php echo $s["id"]?>"><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
-                    <tr>
-                      <td>03</td>
-                      <td>boda</td>
-                      <td>boda@gmail.com</td>
-                      <td class="message">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nemo ducimus doloribus sint quod nam illo atque debitis
-                        voluptate asperiores aperiam dolor nesciunt earum
-                        dolores, temporibus vitae! Perspiciatis pariatur maxime
-                        ullam.
-                      </td>
-                      <td class="basket"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                    </tr>
-                    <tr>
-                      <td>04</td>
-                      <td>Sara</td>
-                      <td>sara@gmail.com</td>
-                      <td class="message">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nemo ducimus doloribus sint quod nam illo atque debitis
-                        voluptate asperiores aperiam dolor nesciunt earum
-                        dolores, temporibus vitae! Perspiciatis pariatur maxime
-                        ullam.
-                      </td>
-                      <td class="basket"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                    </tr>
+                  <?php }?>
                   </tbody>
                 </table>
+                  <?php } else{
+                    ?>
+
+                    <p> <?php echo "لاتوجد رسايل ";?></p> <!--في حاله عدم وجود رسايل-->
+
+                    <?php
+                    }?>
               </div>
             </section>
           </div>

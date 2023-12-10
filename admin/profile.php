@@ -3,7 +3,60 @@
   if(!isset($_COOKIE["admin_name"])){
     header("location:index.php");
   }else{
-
+    include("../user/include/connect.php");
+    include("../function/func.php");
+    if($_SERVER["REQUEST_METHOD"] === "POST"){
+      $name   = $_POST['name'];
+      $email  = $_POST['email'];
+      $mobile = $_POST['mobile'];
+      $pass   = $_POST['password'];
+      $error  = [];
+      if(strlen($pass) <8){
+        ?>
+        <p><?php echo "كلمه السر اقل من المطلوب"?></p>
+        <?php
+      }else{
+      if(!is_strong($pass)){
+        ?>
+        <p><?php echo "كلمه السر ضعيفه"; ?></p>
+        <?Php
+        
+      }else{
+      if($name == $_COOKIE['admin_name']){
+        $old = $_COOKIE['admin_name'];
+        if(is_mobilephone($mobile)):
+        $db->exec("UPDATE admin set email = '$email' ,password = '$pass' 
+        , mobile = '$mobile' where name = '$old'");
+        setcookie("admin_name" , $old , 0,'/');
+        else:
+          ?>
+            <p><?php echo 'رقم التليفون غير صحيح'?></p>
+            <?php
+        endif;
+      }else{
+        $s = $db->query("SELECT name from admin where name = '$name'");
+        $s = $s->fetch(pdo::FETCH_ASSOC);
+        if($s){
+          ?>
+          <p><?php echo "هذا الاسم موجود بالفعل"?></p>
+          <?php
+        }else{
+          if(is_mobilephone($mobile)){
+            $old = $_COOKIE['admin_name'];
+            $db->exec("UPDATE admin set name = '$name' ,email = '$email' ,
+            password = '$pass' , mobile = '$mobile' where name = '$old'");
+            setcookie("admin_name" , $name , 0,'/');
+            header("location:profile.php");
+          }else{
+            ?>
+            <p><?php echo 'رقم التليفون غير صحيح'?></p>
+            <?php
+          }
+        }
+      }
+      }
+    }
+    }
 ?>
 <span style="font-family: verdana, geneva, sans-serif"
   ><!DOCTYPE html>
@@ -111,11 +164,11 @@
                   <i class="fas fa-solid fa-user-shield"></i>
                 </div>
                   <?php
-                    include("../user/include/connect.php");
-                    $name = $_COOKIE["admin_name"];
-                    $select = $db->query("SELECT * from admin where name = '$name'");
+                    $Admin_name = $_COOKIE["admin_name"];
+                    $select = $db->query("SELECT * from admin where name = '$Admin_name'");
                     $select = $select->fetch(pdo::FETCH_ASSOC);
                   ?>
+                  <form action="" method="POST">
                 <div class="form-group">
                   <div class="in_group">
                     <label for="#">name</label>
@@ -123,8 +176,9 @@
                       class="form-control"
                       placeholder="pleade type your name"
                       type="text"
-                      name="first_name"
+                      name="name"
                       value="<?php echo $select['name']?>"
+                      required
                     />
                   </div>
 
@@ -134,8 +188,9 @@
                       class="form-control"
                       placeholder="email"
                       type="email"
-                      name="first_name"
+                      name="email"
                       value="<?php echo $select['email']?>"
+                      required
                     />
                   </div>
 
@@ -147,9 +202,9 @@
                       type="text"
                       name="mobile"
                       value="<?php echo $select['mobile']?>"
+                      required
                     />
                   </div>
-
                   <div class="in_group">
                     <label for="#">password</label>
                     <input
@@ -159,13 +214,17 @@
                       name="password"
                       value="<?php echo $select['password']?>"
                       id="myInput"
+                      required
                     />
                     <i
                       class="show fa-regular fa-eye"
                       onclick="myFunction()"
                     ></i>
                   </div>
+                  <input type="submit" value="update" class="mohamed">
+              </form>
                 </div>
+                
               </div>
             </section>
           </div>

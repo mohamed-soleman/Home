@@ -17,6 +17,17 @@ if(isset($_COOKIE["user_name"])){
         $error[] = "الاسم اقل  المطلوب";
         elseif(strlen($name) > 17):
           $error[] = "الاسم اكبر من المطلوب";
+          else :
+            $er = false;
+            for($i = 0;$i < strlen($name);$i++ ){
+              if($name[$i] == " "){
+                $name[$i] = "_";
+                $er = true;
+              }
+            }
+            if($er){
+              $error []= "تم اضافه علامه '_' بسبب وجوج مسافه وهذه ممنوع";
+            }
       endif;
       
       if(strlen($pass) < 8):// error to password
@@ -24,7 +35,7 @@ if(isset($_COOKIE["user_name"])){
         elseif(strlen($pass) > 11):
           $error[] = "كلمه السر اكبر من الحد المطلوب";
       endif;
-
+      
       if(!$error){//في حاله عدم وجود مشاكل في  في كلمه السر و الاسم 
         $user_Name_good = false; 
         $user_password  = false;

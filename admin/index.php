@@ -13,12 +13,23 @@
       if(strlen($phone) < 11){
         $error [] = "ادخل رقم الهاتف كامل";
       }else if(strlen($phone) > 11){
-        echo "الرقم اكبر من الطبيعي";
+        $error [] ="الرقم اكبر من الطبيعي";
       }
       if(strlen($name) < 3)://error to user_name
         $error[] = "الاسم اقل  المطلوب";
         elseif(strlen($name) > 17):
           $error[] = "الاسم اكبر من المطلوب";
+        else:
+          $er = false;
+            for($i = 0;$i < strlen($name);$i++ ){
+              if($name[$i] == " "){
+                $name[$i] = "_";
+                $er = true;
+              }
+            }
+            if($er){
+              $error []= "تم اضافه علامه '_' بسبب وجوج مسافه وهذه ممنوع";
+            }
       endif;
       
       if(strlen($pass) < 8):// error to password
@@ -220,6 +231,8 @@
         <!--*___________________left-section-nav___________-->
 
         <!--*___________________right-section____________-->
+
+        
         <section class="main">
           <div class="main-top">
             <h1>Dashboard</h1>
@@ -227,27 +240,49 @@
           </div>
           <div class="users">
             <!--_________counter________-->
+            <?php
+            // ااخرج عدد المنتجات
+              $count = $db->query("SELECT category from  `products`");
+              $count = $count->fetchAll(pdo::FETCH_ASSOC);
+              $num_apart  = 0;
+              $num_room   = 0;
+              $num_bed    = 0;
+              foreach($count as $c){
+                if($c['category'] == "Apartment"){
+                  $num_apart++;
+                }else if($c['category'] == "Room"){
+                  $num_room++;
+                }else if($c['category'] == "Bed"){
+                  $num_bed++;
+                }
+              }
+            ?>
             <div class="card">
               <i class="fa-solid fa-people-roof"></i>
-              <h2 class="counter">200</h2>
+              <h2 class="counter"><?php echo $num_apart?></h2>
               <h4>Apartments</h4>
             </div>
 
             <div class="card">
               <i class="fa-solid fa-person-shelter"></i>
-              <h2 class="counter">165</h2>
+              <h2 class="counter"><?php echo $num_room?></h2>
               <h4>Rooms</h4>
             </div>
 
             <div class="card">
               <i class="fa-solid fa-bed"></i>
-              <h2 class="counter">245</h2>
+              <h2 class="counter"><?php echo $num_bed?></h2>
               <h4>Beds</h4>
             </div>
-
+              <?Php
+              // اخراج عدد المدن 
+                $num = $db->query("SELECT count(citys) as num from  `products` group by citys");
+                $num = $num->fetchall(pdo::FETCH_ASSOC);
+                $n = count($num);
+              ?>
             <div class="card">
               <i class="fa-solid fa-city"></i>
-              <h2 class="counter">3</h2>
+              <h2 class="counter"><?php echo $n?></h2>
               <h4>city</h4>
             </div>
           </div>
@@ -256,6 +291,24 @@
             <div class="attendance-list">
               <h1>upload requests</h1>
               <!--____start_____table__________-->
+              <?php
+                      $start = 1;
+                      if(isset($_GET['start'])){$start =$_GET['start'];}
+                      $sel = $db->query("SELECT id from test_uploade");
+                      $sel = $sel->fetchAll(pdo::FETCH_ASSOC);
+                      $number = 5;
+                      $num_s = ceil((count($sel) / $number));
+                      $limt = ($start - 1) * $number;
+                      $all = $db->query("SELECT `test_uploade`.`id` as id_cat,`test_uploade`.`category`,
+                      `test_uploade`.`citys`,`test_uploade`.`duration`
+                      ,`test_uploade`.`price`, `users`.`User_name`,`users`.`id`,`test_uploade`.`C_date`as date
+                      from test_uploade INNER JOIN users on test_uploade.id_user = users.id limit $limt , $number ");
+                      $all = $all->fetchAll(pdo::FETCH_ASSOC);
+                      $n = $limt;
+                      
+                        if($all) {//لو في اي طلب مش ها تظهر
+
+                    ?> 
               <table class="table">
                 <thead>
                   <tr>
@@ -264,80 +317,58 @@
                     <th>cite</th>
                     <th>Duration</th>
                     <th>price</th>
+                    <th>date</th>
+                    <th>owner</th>
                     <th>accept</th>
                     <th>deletion</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <!-- هذه العمليات لا خراج  طلب الرفع-->
+                     <?php
+                     foreach($all as $a){
+                      $date = date_create($a["date"]);
+                      $date = date_format($date , "Y-m-j g:i:s a"); // التنسيق الخاص بالتاريخ
+                      $n++
+                     ?>
                   <tr>
-                    <td>01</td>
-                    <td>room</td>
-                    <td>Ismailia</td>
-                    <td>8:00AM</td>
-                    <td>130$</td>
+                    <td><?php echo $n;?></td>
+                    <td><?php echo $a["category"];?></td>
+                    <td><?php echo $a["citys"];?></td>
+                    <td><?php echo $a["price"];?></td>
+                    <td><?php echo $a["duration"];?></td>
+                    <td><?php echo $date;?></td>
+                    <td><?php echo $a["User_name"];?></td>
                     <!--_____________add-product___________-->
-                    <td><a href="#">add</a></td>
+                    <td><a href="delete.php?add=<?php echo $a['id_cat']?>">add</a></td>
                     <!--_____________add-product___________-->
   
                     <!--_____________delete-product________-->
-                    <td><a href="#" class="second_btn">delete</a></td>
+                    <td><a href="delete.php?del=<?php echo $a['id_cat']?>" class="second_btn">delete</a></td>
                     <!--_____________delete-product________-->
                   </tr>
-                  <tr>
-                    <td>02</td>
-                    <td>bed</td>
-                    <td>cairo</td>
-                    <td>9:00AM</td>
-                    <td>40$</td>
-                    <!--_____________add-product___________-->
-                    <td><a href="#">add</a></td>
-                    <!--_____________add-product___________-->
-  
-                    <!--_____________delete-product________-->
-                    <td><a href="#" class="second_btn">delete</a></td>
-                    <!--_____________delete-product________-->
-                  </tr>
-                  <tr>
-                    <td>03</td>
-                    <td>apartment</td>
-                    <td>asyut</td>
-                    <td>8:00AM</td>
-                    <td>230$</td>
-                    <!--_____________add-product___________-->
-                    <td><a href="#">add</a></td>
-                    <!--_____________add-product___________-->
-  
-                    <!--_____________delete-product________-->
-                    <td><a href="#" class="second_btn">delete</a></td>
-                    <!--_____________delete-product________-->
-                  </tr>
-                  <tr>
-                    <td>04</td>
-                    <td>room</td>
-                    <td>Ismailia</td>
-                    <td>8:00AM</td>
-                    <td>110$</td>
-                    <!--_____________add-product___________-->
-                    <td><a href="#">add</a></td>
-                    <!--_____________add-product___________-->
-  
-                    <!--_____________delete-product________-->
-                    <td><a href="#" class="second_btn">delete</a></td>
-                    <!--_____________delete-product________-->
-                  </tr>
+                      <?php }?>
                 </tbody>
               </table>
               <!--____start_____table__________-->
               <div class="Mobility">
-                <span><a href="#">back</a></span>
-                <a href="#" class="number">1</a>
-                <a href="#" class="number">2</a>
-                <a href="#" class="number">3</a>
-                <a href="#" class="number">4</a>
-                <a href="#" class="number">5</a>
-                <span><a href="#">Next</a></span>
-             </div>
+              <?php
+                if($start > 1){//تظهر اذاكان هناك قوائمه قبل هذه القائمه 
+                ?>
+                <span><a href="index.php?start=<?php echo $start - 1?>">back</a></span>
+                <?php }?>
+                <?Php for($i =1; $i<=$num_s;$i++){?>
+                <a href="index.php?start=<?php echo $i?>" class="number"><?php echo $i?></a>
+                <?php }?>
+                <?php
+                if($start < $num_s){//تظهر اذاكان هناك قوائم بعد هذه القائمه
+                ?>
+                <span><a href="index.php?start=<?php echo $start + 1?>">Next</a></span>
+                <?php }?>
             </div>
+            </div>
+                <?php }else{ ?>
+                <?php echo "لايوجد طلبات للرفع" ;}?><!--في حاله عدم وجود طلبات-->
             <?php }else{?>
 <!--________start________-form login_________-->
 <div class="container_form">
@@ -361,7 +392,7 @@
   <div class="form form--login">
     <div class="form--heading"> login </div>
     <form autocomplete="off" method="POST">
-      <input type="text" placeholder="Name" name ="old_name" required>
+      <input type="text" placeholder="Name or Email" name ="old_name" required>
       <input type="password" placeholder="Password" name="old_pass" required>
       <button class="button" type="submit">Login</button>
     </form>

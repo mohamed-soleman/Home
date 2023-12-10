@@ -1,3 +1,19 @@
+<?php
+
+  if($_SERVER['REQUEST_METHOD'] === "POST"){
+    include('user/include/connect.php');
+    include("function/func.php");
+    $message = $_POST["message"];
+    $user_name = $_COOKIE['user_name'];
+    $id = $db->query("SELECT id FROM users where User_name = '$user_name'");
+    $id = $id->fetch(pdo::FETCH_ASSOC);
+    $id = $id['id'];
+    $message = is_string_true($message);
+    $db->exec("INSERT INTO messege (text , id_user) values('$message' , $id)");
+    
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,10 +51,10 @@
             services
           </li>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="user/services.php?type=apartment">Apartments</a></li>
-            <li><a class="dropdown-item" href="user/services.php?type=rooms">Rooms</a></li>
-            <li><a class="dropdown-item" href="user/services.php?type=beds">Beds</a></li>
-            <li><a class="dropdown-item" href="user/services.php?type=all">All</a></li>
+            <li><a class="dropdown-item" href="user/change.php?type=Apartment">Apartments</a></li>
+            <li><a class="dropdown-item" href="user/change.php?type=Room">Rooms</a></li>
+            <li><a class="dropdown-item" href="user/change.php?type=Bed">Beds</a></li>
+            <li><a class="dropdown-item" href="user/change.php?type=All">All</a></li>
           </ul>
         </div>
 
@@ -79,7 +95,7 @@
          Autem obcaecati doloremque vero dolor non recusandae harum in molestiae, alias consequatur!</p>
    <span class="btn_container"> 
      <button> <span class="box"> student </span></button>
-    <button class="c-button c-button--gooey"> property owner <div class="c-button__blobs"><div></div><div></div><div></div></div></button>
+    <button class="c-button c-button--gooey"><a href="user/upload_product.php"> property owner</a> <div class="c-button__blobs"><div></div><div></div><div></div></div></button>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
       <defs>
         <filter id="goo">
@@ -148,7 +164,7 @@
             <div class="cover_content">
               <h4> Rooms </h4>
               <p id="promo_text">To see everything related to this media, go to the advertisements page using the button below</p>
-              <button> <a  href="#" alt="#" class="box"> show all </a></button>
+              <button> <a  href="user/change.php?type=Room" alt="#" class="box"> show all </a></button>
              </div>
              <div class="cover">
                 <img src="images/g6.jpg" alt="">
@@ -160,7 +176,7 @@
             <div class="cover_content">
               <h4> Bads </h4>
               <p id="promo_text">To see everything related to this media, go to the advertisements page using the button below</p>
-              <button> <a  href="#" alt="#" class="box"> show all </a></button>
+              <button> <a  href="user/change.php?type=Bed" alt="#" class="box"> show all </a></button>
              </div>
              <div class="cover">
                 <img src="images/g5.jpg" alt="">
@@ -172,14 +188,14 @@
             <div class="cover_content">
               <h4> Apartments</h4>
               <p id="promo_text">To see everything related to this media, go to the advertisements page using the button below</p>
-              <button> <a  href="#" alt="#" class="box"> show all </a></button>
+              <button> <a  href="user/change.php?type=Apartment" alt="#" class="box"> show all </a></button>
              </div>
              <div class="cover">
                 <img src="images/g3.jpg" alt="">
            </div>
          </div>
         </div>
-         <span class="all_ads">All ads <i class="fa-solid fa-arrow-right"></i></span>
+         <span class="all_ads"><a href="user/change.php?type=All">All ads</a> <i class="fa-solid fa-arrow-right"></i></span>
       </div>
     </div>
   </section>
@@ -331,23 +347,12 @@
                 </div>
               </div>
             </div>
+            <?php
+            if(isset($_COOKIE["user_name"])){
+            ?>
             <div class="col-lg-6 wow fadeInRight" data-wow-duration="0.5s" data-wow-delay="0.25s">
               <form id="contact" action="" method="post">
                 <div class="row">
-                  <div class="col-lg-6">
-                    <fieldset>
-                      <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
-                    </fieldset>
-                  </div>
-                  <div class="col-lg-6">
-                    <fieldset>
-                      <input type="surname" name="surname" id="surname" placeholder="Surname" autocomplete="on" required>
-                    </fieldset>
-                  </div>
-                  <div class="col-lg-12">
-                    <fieldset>
-                      <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
-                    </fieldset>
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
@@ -364,6 +369,7 @@
                   <img src="assets/images/contact-decoration.png" alt="">
                 </div>
               </form>
+            <?php }?>
             </div>
           </div>
         </div>

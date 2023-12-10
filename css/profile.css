@@ -226,3 +226,22 @@ a:hover i {
 .show:hover {
   color: var(--secondary);
 }
+.mohamed{
+  width: 24%;
+  color:var(--light);
+  font-size: 1rem;
+  border-radius: 20px !important;
+  background-color:#333;
+  margin:auto;
+  padding:5px;
+  margin-top: 30px;
+  transition:0.3s;
+
+}
+
+.mohamed:hover{
+  border:3px solid #34af6d;
+  background-color:#34af6d;
+
+
+}
