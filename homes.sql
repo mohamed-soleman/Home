@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2023 at 01:38 PM
+-- Generation Time: Dec 11, 2023 at 02:10 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `homes`
 --
+CREATE DATABASE IF NOT EXISTS `homes` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `homes`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
@@ -35,6 +38,10 @@ CREATE TABLE `admin` (
   `mobile` varchar(11) NOT NULL,
   `A_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `admin`:
+--
 
 --
 -- Dumping data for table `admin`
@@ -51,6 +58,7 @@ INSERT INTO `admin` (`id`, `name`, `email`, `password`, `mobile`, `A_date`) VALU
 -- Table structure for table `comments`
 --
 
+DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `message` varchar(255) NOT NULL,
@@ -58,6 +66,14 @@ CREATE TABLE `comments` (
   `d_message` datetime NOT NULL DEFAULT current_timestamp(),
   `id_product` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `comments`:
+--   `id_user`
+--       `users` -> `id`
+--   `id_product`
+--       `products` -> `id`
+--
 
 --
 -- Dumping data for table `comments`
@@ -78,6 +94,7 @@ INSERT INTO `comments` (`id`, `message`, `id_user`, `d_message`, `id_product`) V
 -- Table structure for table `messege`
 --
 
+DROP TABLE IF EXISTS `messege`;
 CREATE TABLE `messege` (
   `id` int(11) NOT NULL,
   `text` varchar(500) DEFAULT NULL,
@@ -85,12 +102,19 @@ CREATE TABLE `messege` (
   `id_user` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELATIONSHIPS FOR TABLE `messege`:
+--   `id_user`
+--       `users` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `products`
 --
 
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `price` varchar(50) NOT NULL,
@@ -102,6 +126,12 @@ CREATE TABLE `products` (
   `C_date` datetime NOT NULL DEFAULT current_timestamp(),
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `products`:
+--   `id_user`
+--       `users` -> `id`
+--
 
 --
 -- Dumping data for table `products`
@@ -122,6 +152,7 @@ INSERT INTO `products` (`id`, `price`, `category`, `duration`, `citys`, `text`, 
 -- Table structure for table `test_uploade`
 --
 
+DROP TABLE IF EXISTS `test_uploade`;
 CREATE TABLE `test_uploade` (
   `id` int(11) NOT NULL,
   `price` int(11) NOT NULL,
@@ -133,6 +164,12 @@ CREATE TABLE `test_uploade` (
   `C_date` datetime NOT NULL DEFAULT current_timestamp(),
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `test_uploade`:
+--   `id_user`
+--       `users` -> `id`
+--
 
 --
 -- Dumping data for table `test_uploade`
@@ -150,6 +187,7 @@ INSERT INTO `test_uploade` (`id`, `price`, `category`, `duration`, `citys`, `tex
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `User_name` varchar(100) NOT NULL,
@@ -157,6 +195,10 @@ CREATE TABLE `users` (
   `Password` varchar(50) NOT NULL,
   `currtime` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `users`:
+--
 
 --
 -- Dumping data for table `users`
