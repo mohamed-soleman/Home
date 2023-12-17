@@ -1,0 +1,6 @@
+name:
+price:
+address:
+location:
+daily:()yes no()
+text:
